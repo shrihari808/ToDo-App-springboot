@@ -1,5 +1,8 @@
 package com.todo.todoapp;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +16,8 @@ public class ToDoService {
         this.repo = repo;
     }
 
-    public List<ToDo> getAllTasks(){
-        return repo.findAll();
+    public Page<ToDo> getAllTasks(@PageableDefault(size = 10,sort = "id") Pageable pageable){
+        return repo.findAll(pageable);
     }
 
     public ToDo addTask(String title){

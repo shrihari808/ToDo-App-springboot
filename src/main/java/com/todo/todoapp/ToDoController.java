@@ -1,6 +1,8 @@
 package com.todo.todoapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,8 @@ public class ToDoController {
     }
 
     @GetMapping
-    public List<ToDo> getAllTasks(){
-        return toDoService.getAllTasks();
+    public Page<ToDo> getAllTasks(Pageable pageable){
+        return toDoService.getAllTasks(pageable);
     }
 
     @PostMapping
