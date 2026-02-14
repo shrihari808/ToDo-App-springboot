@@ -1,5 +1,7 @@
 package com.todo.todoapp;
 
+import com.todo.todoapp.dto.CreateToDoRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,13 +24,15 @@ public class ToDoController {
     }
 
     @GetMapping
-    public Page<ToDo> getAllTasks(@PageableDefault(size = 10,sort = "id") Pageable pageable){
-        return toDoService.getAllTasks(pageable);
+    public Page<ToDo> getAllTasks(
+            @RequestParam(required = false) Boolean completed,
+            @PageableDefault(size = 10,sort = "id") Pageable pageable){
+        return toDoService.getTasks(completed, pageable);
     }
 
     @PostMapping
-    public ToDo addTask(@RequestBody ToDo toDo){
-        return toDoService.addTask(toDo.getTitle());
+    public ToDo addTask(@Valid @RequestBody CreateToDoRequest request){
+        return toDoService.addTask(request.getTitle());
     }
 
     @PutMapping("/{id}")

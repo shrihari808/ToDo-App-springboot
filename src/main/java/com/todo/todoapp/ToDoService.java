@@ -25,6 +25,13 @@ public class ToDoService {
         return repo.findAll(pageable);
     }
 
+    public Page<ToDo> getTasks(Boolean completed, Pageable pageable){
+        if(completed==null){
+            return repo.findAll(pageable);
+        }
+        return repo.findByCompleted(completed,pageable);
+    }
+
     public ToDo addTask(String title){
         ToDo todo = new ToDo();
         todo.setCompleted(false);
